@@ -1,0 +1,65 @@
+<html>
+
+    <head>
+    <title>Conversor de Moedas</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device=width, initial-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+
+    <script>
+
+        document.addEventListener('click', function (event) {
+
+            if (!event.target.matches('#calc')) return;
+
+            event.preventDefault();
+
+            var xhr = new XMLHttpRequest();
+                
+            xhr.open( "GET", "https://api.exchangerate-api.com/v4/latest/BRL", false );
+
+            xhr.send();
+
+            var response = JSON.parse(xhr.responseText).rates;
+
+            var result = response[document.getElementById("currency").value] * document.getElementById('real').value;
+
+            document.getElementById('output').value = result;
+
+            document.getElementById('currency2').innerHTML = document.getElementById("currency").options[document.getElementById("currency").options.selectedIndex].label;
+
+        }, false);
+
+    </script>
+    <header>
+      <div class="main-conversor">
+          <div class="Left-Conversor">
+              <h1>Saiba o Valor do Seu Real</h1>
+              <img src="assets/Consulta.svg" class="Image" alt="TESTE">
+              
+          </div>
+      <div class="Right-Conversor">
+         <div class="Card-Conversor">
+            <div class="Conversor">
+                <h1>Conversor</h1>
+            </div>
+            <div class="textfield">
+                 <label for="Seu Valor">Valor Em Reais</label>
+             <input id="real" type="number" name="Insira Seu Valor Aqui!" placeholder="Insira Seu Valor Aqui!">
+                </div>
+
+                <select name="select" id="currency">
+                    <option value="EUR">Euro</option>
+                    <option value="USD" selected>Dolar</option>
+                </select>
+
+             <button id="calc" class="btn-calc">Calcular</button>
+             <div class="Resultado">
+                <label for="Valor Em Dolár">Valor Em <label id="currency2"></label></label>
+
+                <input id="output" type="number" name="Resultado" placeholder="Resultado" readonly>
+            </div>
+         </div> 
+      </div>
+      </div>
